@@ -1,0 +1,38 @@
+{
+  "name": "mongoose-acl",
+  "version": "0.1.0",
+  "description": "ACL plugin for Mongoose",
+  "main": "index.js",
+  "dependencies": {
+    "babel": "^4.5.1",
+    "mongoose": "^3.8.23"
+  },
+  "devDependencies": {
+    "chai": "^2.1.0",
+    "co-mocha": "^1.1.0",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^4.0.0",
+    "gulp-copy": "^0.0.2",
+    "gulp-sourcemaps": "^1.3.0",
+    "mocha": "^2.1.0",
+    "q": "^1.2.0",
+    "source-map-support": "^0.2.9"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --require co-mocha --harmony --reporter dot build/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazutkin/mongoose-acl.git"
+  },
+  "author": "Dmitry Lazutkin",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/lazutkin/mongoose-acl/issues"
+  },
+  "engines": {
+    "node": ">=0.12"
+  },
+  "homepage": "https://github.com/lazutkin/mongoose-acl"
+}
