@@ -1,6 +1,5 @@
 'use strict'
 import {EventEmitter} from 'events'
-import from 'babel/polyfill'
 import assert from 'assert'
 import mongoose from 'mongoose'
 
@@ -9,6 +8,13 @@ const {Schema: {Types: {Mixed}}, Types: {ObjectId}} = mongoose
 //------------------------------------------------------------------------------
 const AclPath = 'acl'
 const AclScopeName = 'acl'
+
+// Array#from whould be used when it will be provided by node
+function set2array(s){
+  let arr = []
+  for(let i of s.keys()) arr.push(i)
+  return arr
+}
 
 //------------------------------------------------------------------------------
 function toSetOfGrantees(v){
@@ -191,7 +197,7 @@ function findAccessibleBy(opts, grantees, permission, scope, selectAclScope = tr
 
   let q = this.where(`${opts.path}.grants`).elemMatch({
     scope      : scope,
-    grantee    : {$in: Array.from(grantees)},
+    grantee    : {$in: set2array(grantees)},
     permission : {$gte: permission}
   })
 
@@ -216,7 +222,7 @@ function explainAcl(opts, grantees){
 function selectList(opts, ...scopes){
   'use strict'
   scopes = new Set(scopes)
-  return Array.from(
+  return set2array(
     opts.scopes
       .filter(v => scopes.has(v.name))
       .reduce((o, v) => v.paths.reduce((o, v) => o.add(v), o), new Set())
