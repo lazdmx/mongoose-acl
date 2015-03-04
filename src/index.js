@@ -1,7 +1,8 @@
 'use strict'
-import {EventEmitter} from 'events'
+import from 'es6-shim'
 import assert from 'assert'
 import mongoose from 'mongoose'
+import {EventEmitter} from 'events'
 
 const {Schema: {Types: {Mixed}}, Types: {ObjectId}} = mongoose
 
@@ -25,7 +26,7 @@ function toSetOfGrantees(v){
     return new Set(v)
   }
 
-  if(v.toString() == '[object Set]'){
+  if(v instanceof Set){
     return v
   }
 
