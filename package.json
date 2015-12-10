@@ -1,6 +1,6 @@
 {
   "name": "mongoose-acl",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "ACL plugin for Mongoose",
   "main": "index.js",
   "dependencies": {
