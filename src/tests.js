@@ -45,7 +45,7 @@ it('should return scopes', function(){
 it('should define access by single tag', function(){
   let Home = mongoose.model('Home')
   let doc = new Home()
-  
+
   doc.getAcl('first')
     .scope('info')
       .grantAccess('alice', 0)
@@ -77,7 +77,7 @@ it('should define access by single tag', function(){
 it('should define access by multiple tags', function(){
   let Home = mongoose.model('Home')
   let doc = new Home()
-  
+
   doc = new Home()
   doc.getAcl('first')
     .scope('info')
@@ -115,10 +115,38 @@ it('should define access by multiple tags', function(){
 })
 
 //---------------
+it('should reset permissions for all grantees in scope', function(){
+  let Home = mongoose.model('Home')
+  let doc = new Home()
+
+  doc = new Home()
+  doc.getAcl('first')
+    .scope('info')
+      .grantAccess('alice', 0)
+      .grantAccess('bob', 1)
+      .grantAccess('carol', 2)
+      .end()
+    .apply()
+
+  doc.getAcl('second')
+    .scope('info')
+      .grantAccess(3)
+      .end()
+    .apply()
+
+  expect(doc.getAcl().scope('info').access('alice')).to.be.eql(3)
+  expect(doc.getAcl().scope('info').access('bob')).to.be.eql(3)
+  expect(doc.getAcl().scope('info').access('carol')).to.be.eql(3)
+  expect(doc.getAcl().scope('money').access('alice')).to.be.eql(0)
+  expect(doc.getAcl().scope('money').access('bob')).to.be.eql(0)
+  expect(doc.getAcl().scope('money').access('carol')).to.be.eql(0)
+})
+
+//---------------
 it('should reject tag', function(){
   let Home = mongoose.model('Home')
   let doc = new Home()
-  
+
   doc.getAcl('first').scope('info').grantAccess('alice', 1)
   doc.getAcl('second').scope('info').grantAccess('alice', 2)
   doc.getAcl().apply()
@@ -261,4 +289,3 @@ describe('#findAccessibleBy', function(){
     expect(docs).to.be.empty
   })
 })
-

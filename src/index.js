@@ -86,8 +86,15 @@ class AclWriter extends EventEmitter{
     return this
   }
 
-  //-------------------------
+    //-------------------------
   grantAccess(grantees, permission){
+    if(permission == null){
+      permission = grantees
+      grantees = this.doc[this.opts.path].grants
+        .filter(v => v.scope === this.currentScope)
+        .map(v => v.grantee)
+    }
+
     assert.ok(grantees, 'Grantees must be defined')
     assert.ok(permission >= this.opts.lowestAccess, 'Invalid permission level')
 
@@ -125,7 +132,7 @@ class AclWriter extends EventEmitter{
     if(!this.doc.isModified(this.opts.path)){
       return this.doc
     }
-    
+
     let acl = this.doc[this.opts.path]
 
     let map = new Map()
