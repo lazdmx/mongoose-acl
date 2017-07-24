@@ -1,7 +1,7 @@
 var del        = require('del')
 var gulp       = require('gulp')
 var babel      = require('gulp-babel')
-var sourcemaps = require('gulp-sourcemaps')
+var ts         = require('gulp-typescript')
 
 var babelOpts = {
   whitelist: [
@@ -28,15 +28,10 @@ gulp.task('clean', function(cb){
 })
 
 gulp.task('build', ['clean'], function(){
-  return gulp.src('src/*.js')
-    .pipe(sourcemaps.init())
+  var tsProject = ts.createProject('tsconfig.json')
+  return tsProject.src()
+    .pipe(tsProject())  
     .pipe(babel(babelOpts))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('build'))
-})
-
-gulp.task('release', ['build'], function(){
-  return gulp.src('build/index.*')
     .pipe(gulp.dest('lib'))
 })
 

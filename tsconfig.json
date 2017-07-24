@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "outDir": "build",
+        "sourceMap": false,
+        "allowJs": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "target": "es6"
+    },
+    "files": [
+        "./src/index.ts",
+        "./src/tests.ts"
+    ]
+}
